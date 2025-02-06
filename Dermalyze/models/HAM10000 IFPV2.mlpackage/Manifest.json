@@ -1,0 +1,24 @@
+{
+    "fileFormatVersion": "1.0.0",
+    "itemInfoEntries": {
+        "0843EFCA-5360-4959-8479-9FDD25829384": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "HAM10000 IFPV2.mlmodel",
+            "path": "com.apple.CoreML/HAM10000 IFPV2.mlmodel"
+        },
+        "534B6F5D-3CFC-4A2A-B5AC-1849C91ED3BE": {
+            "author": "com.apple.CoreML",
+            "description": "External FeatureDescription Overlay",
+            "name": "FeatureDescriptions.json",
+            "path": "com.apple.CoreML/FeatureDescriptions.json"
+        },
+        "57B321B3-D39B-4D24-87DF-4F2FE46761AD": {
+            "author": "com.apple.CoreML",
+            "description": "External Metadata Overlay",
+            "name": "Metadata.json",
+            "path": "com.apple.CoreML/Metadata.json"
+        }
+    },
+    "rootModelIdentifier": "0843EFCA-5360-4959-8479-9FDD25829384"
+}

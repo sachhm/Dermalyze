@@ -10,9 +10,36 @@
 		25840CC42D54D0B900BAC1E5 /* Dermalyze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dermalyze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		25840CEB2D54DECF00BAC1E5 /* Exceptions for "Dermalyze" folder in "Dermalyze" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				src/models/HAM10000_IFPV2_Classifier,
+			);
+			target = 25840CC32D54D0B900BAC1E5 /* Dermalyze */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		25840CEC2D54DECF00BAC1E5 /* Exceptions for "Dermalyze" folder in "Compile Sources" phase from "Dermalyze" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 25840CC02D54D0B900BAC1E5 /* Sources */;
+			membershipExceptions = (
+				src/models/HAM10000_IFPV2_Classifier,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		25840CC62D54D0B900BAC1E5 /* Dermalyze */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				25840CEB2D54DECF00BAC1E5 /* Exceptions for "Dermalyze" folder in "Dermalyze" target */,
+				25840CEC2D54DECF00BAC1E5 /* Exceptions for "Dermalyze" folder in "Compile Sources" phase from "Dermalyze" target */,
+			);
+			explicitFolders = (
+				src/models/HAM10000_IFPV2_Classifier,
+			);
 			path = Dermalyze;
 			sourceTree = "<group>";
 		};

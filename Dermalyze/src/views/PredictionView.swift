@@ -4,17 +4,14 @@
 //
 //  Created by samo on 6/2/2025.
 //
-
 import SwiftUI
 
 struct PredictionView: View {
     @Environment(\.dismiss) private var dismiss
-//    @StateObject private var mlManager = MLManager(modelName: "SkinLesionClassifier") // Load your CoreML model
-    var capturedImage: UIImage?
+    @StateObject private var viewModel = HAM10000ViewModel()
     
-    @State private var predictionLabel: String?
-    @State private var predictionConfidence: Float?
-    
+    var capturedImage: UIImage? // The image you want to predict on
+
     var body: some View {
         VStack(spacing: 20) {
             if let image = capturedImage {
@@ -22,30 +19,24 @@ struct PredictionView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: 300, maxHeight: 300)
-                
-                // Analyze the image when it's available
-                Button("Analyze Photo") {
-//                    analyzeImage(image)
-                }
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+                    .frame(maxWidth: 200, maxHeight: 200)
+                    .onAppear {
+                        // Trigger the prediction as soon as the image appears
+                        viewModel.makePrediction(for: image)
+                    }
             } else {
                 Text("No image selected")
             }
-            
-            // Show classification result
-            if let label = predictionLabel, let confidence = predictionConfidence {
-                Text("Predicted: \(label)")
-                    .font(.headline)
-                    .padding()
-                Text("Confidence: \(String(format: "%.2f", confidence * 100))%")
-                    .font(.subheadline)
-                    .padding()
+                        
+            List {
+                // Display the prediction results from the model
+                ForEach(viewModel.labels.keys.sorted(), id: \.self) { key in
+                    if let value = viewModel.labels[key] {
+                        Text("\(key): \(String(format: "%.0f", value * 100))%")
+                    }
+                }
             }
-            
+
             // Button to take another photo
             Button(action: {
                 dismiss()
@@ -61,5 +52,4 @@ struct PredictionView: View {
         .navigationTitle("Predicted Results")
         .padding()
     }
-    
 }

@@ -1,15 +1,15 @@
 {
   "Inputs" : {
     "image" : {
-      "MLFeatureShortDescription" : "--"
+      "MLFeatureShortDescription" : ""
     }
   },
   "Outputs" : {
     "target" : {
-      "MLFeatureShortDescription" : "--"
+      "MLFeatureShortDescription" : ""
     },
     "targetProbability" : {
-      "MLFeatureShortDescription" : "--"
+      "MLFeatureShortDescription" : ""
     }
   },
   "TrainingInputs" : {

@@ -14,15 +14,18 @@ class HAM10000Model {
 
     init() {
         do {
-            // Load the CoreML model from the .mlmodelc file
-            let modelURL = Bundle.main.url(forResource: "HAM10000 Classifier - IFPV2", withExtension: ".mlpackage")!
+            guard let modelURL = Bundle.main.url(forResource: "HAM10000 IFPV2 Full Augment 50 Iterations",
+                                                 withExtension: "mlmodelc") else {
+                fatalError("Model file not found")
+            }
+            
             let coreMLModel = try MLModel(contentsOf: modelURL)
-            model = try VNCoreMLModel(for: coreMLModel)
+            self.model = try VNCoreMLModel(for: coreMLModel)
         } catch {
-            print("Error loading model: \(error)")
+            fatalError("Model initialization failed: \(error)")
         }
     }
-
+    
     // Function to make predictions
     func predict(image: UIImage, completion: @escaping ([String: Double]?) -> Void) {
         guard let model = model else {

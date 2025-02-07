@@ -1,24 +1,24 @@
 {
     "fileFormatVersion": "1.0.0",
     "itemInfoEntries": {
-        "11D36D85-67CD-4F6A-AB2C-A5CFF075F0A0": {
+        "1345CE0D-E053-44D2-979C-021FAF71BD30": {
             "author": "com.apple.CoreML",
             "description": "External Metadata Overlay",
             "name": "Metadata.json",
             "path": "com.apple.CoreML/Metadata.json"
         },
-        "795BD403-0565-4251-91FD-0DF0A6208DB7": {
-            "author": "com.apple.CoreML",
-            "description": "CoreML Model Specification",
-            "name": "HAM10000 Classifier - IFPV2.mlmodel",
-            "path": "com.apple.CoreML/HAM10000 Classifier - IFPV2.mlmodel"
-        },
-        "D4A4671F-D6BB-4070-BA27-A03D7023B257": {
+        "8ABFEB28-A740-4DCA-8C49-9D87AD0F9844": {
             "author": "com.apple.CoreML",
             "description": "External FeatureDescription Overlay",
             "name": "FeatureDescriptions.json",
             "path": "com.apple.CoreML/FeatureDescriptions.json"
+        },
+        "95D689CE-6499-4445-BD89-80CB09B603AF": {
+            "author": "com.apple.CoreML",
+            "description": "CoreML Model Specification",
+            "name": "HAM10000 IFPV2 Full Augment 50 Iterations.mlmodel",
+            "path": "com.apple.CoreML/HAM10000 IFPV2 Full Augment 50 Iterations.mlmodel"
         }
     },
-    "rootModelIdentifier": "795BD403-0565-4251-91FD-0DF0A6208DB7"
+    "rootModelIdentifier": "95D689CE-6499-4445-BD89-80CB09B603AF"
 }

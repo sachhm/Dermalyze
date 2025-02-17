@@ -31,9 +31,8 @@ let titlesDescription: [String: String] = [
 ]
 
 struct ExplanationView: View {
-    @Environment(\.dismiss) private var dismiss
     let diseaseName: String
-    @Binding var path: NavigationPath
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         ZStack {
@@ -52,7 +51,9 @@ struct ExplanationView: View {
                         .lineSpacing(4)
                     
                     VStack(spacing: 16) {
-                        Button(action: { dismiss() }) {
+                        Button(action: {
+                            navigationPath.removeLast()
+                        }) {
                             HStack {
                                 Image(systemName: "arrow.left")
                                 Text("Back to Results")
@@ -66,7 +67,8 @@ struct ExplanationView: View {
                         }
                         
                         Button(action: {
-                            path = NavigationPath(["camera"])
+                            navigationPath = NavigationPath()
+                            navigationPath.append(Route.camera)
                         }) {
                             HStack {
                                 Image(systemName: "camera.fill")
@@ -79,7 +81,6 @@ struct ExplanationView: View {
                             .background(Color.blue.opacity(0.1))
                             .cornerRadius(12)
                         }
-
                     }
                 }
                 .padding(24)

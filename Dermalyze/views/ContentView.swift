@@ -6,11 +6,17 @@
 //
 import SwiftUI
 
+enum Route: Hashable {
+    case camera
+    case prediction(UIImage)
+    case explanation(String)
+}
+
 struct ContentView: View {
-    @State private var path = NavigationPath()
+    @State private var navigationPath = NavigationPath()
     
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $navigationPath) {
             ZStack {
                 Color(.systemBackground).ignoresSafeArea()
                 
@@ -31,7 +37,6 @@ struct ContentView: View {
                     }
                     .padding(.top, 60)
                     
-                    // Description Card
                     Text("Scan your skin, predict potential conditions, and get immediate insights. Quickly assess your skin's health—just by taking a photo.")
                         .multilineTextAlignment(.center)
                         .font(.body)
@@ -40,8 +45,9 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    // Action Button to CameraView
-                    NavigationLink(value: "camera") {
+                    Button(action: {
+                        navigationPath.append(Route.camera)
+                    }) {
                         HStack {
                             Image(systemName: "camera.fill")
                             Text("Get Started")
@@ -58,12 +64,14 @@ struct ContentView: View {
                 }
             }
             .navigationBarHidden(true)
-            .navigationDestination(for: String.self) { route in
-                // Here we handle navigation for the "camera" route.
-                if route == "camera" {
-                    CameraView()
-                } else {
-                    EmptyView()
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .camera:
+                    CameraView(navigationPath: $navigationPath)
+                case .prediction(let image):
+                    PredictionView(navigationPath: $navigationPath, capturedImage: image)
+                case .explanation(let diseaseName):
+                    ExplanationView(diseaseName: diseaseName, navigationPath: $navigationPath)
                 }
             }
         }

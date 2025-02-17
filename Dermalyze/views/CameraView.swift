@@ -10,71 +10,62 @@ import SwiftUI
 struct CameraView: View {
     @State private var showingImagePicker = false
     @State private var capturedImage: UIImage?
-    @State private var path = NavigationPath()
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
-        NavigationStack(path: $path) {
-            ZStack {
-                Color(.systemBackground).ignoresSafeArea()
-                
-                VStack(spacing: 30) {
-                    if let image = capturedImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 400)
-                            .cornerRadius(12)
-                            .padding(.horizontal)
-                        
-                        Button(action: {
-                            path.append("prediction")
-                        }) {
-                            HStack {
-                                Image(systemName: "sparkles")
-                                Text("Analyze Photo")
-                            }
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(height: 50)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .cornerRadius(12)
-                            .padding(.horizontal, 32)
+        ZStack {
+            Color(.systemBackground).ignoresSafeArea()
+            
+            VStack(spacing: 30) {
+                if let image = capturedImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 400)
+                        .cornerRadius(12)
+                        .padding(.horizontal)
+                    
+                    Button(action: {
+                        navigationPath.append(Route.prediction(image))
+                    }) {
+                        HStack {
+                            Image(systemName: "sparkles")
+                            Text("Analyze Photo")
                         }
-                    } else {
-                        Spacer()
-                        
-                        Button(action: { showingImagePicker = true }) {
-                            VStack(spacing: 16) {
-                                Image(systemName: "camera.circle.fill")
-                                    .font(.system(size: 80))
-                                    .symbolRenderingMode(.hierarchical)
-                                Text("Take Photo")
-                                    .font(.headline)
-                            }
-                            .foregroundColor(.blue)
-                        }
-                        
-                        Spacer()
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(height: 50)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                        .padding(.horizontal, 32)
                     }
+                } else {
+                    Spacer()
+                    
+                    Button(action: { showingImagePicker = true }) {
+                        VStack(spacing: 16) {
+                            Image(systemName: "camera.circle.fill")
+                                .font(.system(size: 80))
+                                .symbolRenderingMode(.hierarchical)
+                            Text("Take Photo")
+                                .font(.headline)
+                        }
+                        .foregroundColor(.blue)
+                    }
+                    
+                    Spacer()
                 }
-                .navigationTitle("Capture")
-                .navigationBarTitleDisplayMode(.inline)
             }
-            .sheet(isPresented: $showingImagePicker) {
-                ImagePicker(image: $capturedImage)
-            }
-            .navigationDestination(for: String.self) { route in
-                if route == "prediction", let image = capturedImage {
-                    PredictionView(path: $path, capturedImage: image)
-                        .navigationBarBackButtonHidden(true)
-                        .onDisappear { capturedImage = nil }
-                } else if route == "camera" {
-                    CameraView()  // Ensures navigation works properly
-                }
-            }
-
+            .navigationTitle("Capture")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $capturedImage)
+        }
+        .onDisappear(){
+            capturedImage = nil
         }
     }
 }

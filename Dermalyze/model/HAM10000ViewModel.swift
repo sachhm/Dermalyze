@@ -18,8 +18,18 @@ class HAM10000ViewModel: ObservableObject {
         "vasc": 0.0
     ]
     
+    let labelMappings: [String: String] = [
+        "akiec": "Actinic Keratoses",
+        "bcc": "Basal Cell Carcinoma",
+        "bkl": "Benign Keratosis-like Lesions",
+        "df": "Dermatofibroma",
+        "mel": "Melanoma",
+        "nv": "Melanocytic Nevi",
+        "vasc": "Vascular Lesions"
+    ]
+    
     private var model: HAM10000Model
-
+    
     init() {
         model = HAM10000Model()
     }

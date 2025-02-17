@@ -11,7 +11,7 @@ import UIKit
 
 class HAM10000Model {
     var model: VNCoreMLModel?
-
+    
     init() {
         do {
             guard let modelURL = Bundle.main.url(forResource: "HAM10000 IFPV2 Full Augment 50 Iterations",
@@ -32,7 +32,7 @@ class HAM10000Model {
             completion(nil)
             return
         }
-
+        
         // Create a Vision request with the loaded model
         let request = VNCoreMLRequest(model: model) { request, error in
             guard let results = request.results as? [VNClassificationObservation] else {
@@ -40,7 +40,7 @@ class HAM10000Model {
                 completion(nil)
                 return
             }
-
+            
             var labels: [String: Double] = [:]
             // Iterate through the results and store the confidence for each class
             for result in results {
@@ -66,7 +66,7 @@ class HAM10000Model {
             // Return the predicted labels and their confidence
             completion(labels)
         }
-
+        
         // Perform the request with the image
         guard let ciImage = CIImage(image: image) else {
             completion(nil)

@@ -10,52 +10,75 @@ import SwiftUI
 struct CameraView: View {
     @State private var showingImagePicker = false
     @State private var capturedImage: UIImage?
-    @State private var navigateToPrediction = false
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 20) {
-                if let image = capturedImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxHeight: 300)
-                    
-                    Button(action: {
-                        navigateToPrediction = true
-                    }) {
-                        Text("Analyze Photo")
+        NavigationStack(path: $path) {
+            ZStack {
+                Color(.systemBackground).ignoresSafeArea()
+                
+                VStack(spacing: 30) {
+                    if let image = capturedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 400)
+                            .cornerRadius(12)
+                            .padding(.horizontal)
+                        
+                        Button(action: {
+                            path.append("prediction")
+                        }) {
+                            HStack {
+                                Image(systemName: "sparkles")
+                                Text("Analyze Photo")
+                            }
                             .font(.headline)
                             .foregroundColor(.white)
-                            .padding()
+                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
                             .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                } else {
-                    Button(action: {
-                        showingImagePicker = true
-                    }) {
-                        VStack {
-                            Image(systemName: "camera.circle.fill")
-                                .font(.system(size: 64))
-                            Text("Take Photo")
-                                .font(.headline)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 32)
                         }
-                        .foregroundColor(.blue)
+                    } else {
+                        Spacer()
+                        
+                        Button(action: { showingImagePicker = true }) {
+                            VStack(spacing: 16) {
+                                Image(systemName: "camera.circle.fill")
+                                    .font(.system(size: 80))
+                                    .symbolRenderingMode(.hierarchical)
+                                Text("Take Photo")
+                                    .font(.headline)
+                            }
+                            .foregroundColor(.blue)
+                        }
+                        
+                        Spacer()
                     }
                 }
+                .navigationTitle("Capture")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .navigationTitle("Take Photo")
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $capturedImage)
             }
-            .navigationDestination(isPresented: $navigateToPrediction) {
-                PredictionView(capturedImage: capturedImage) // Pass captured image
-                    .navigationBarBackButtonHidden(true)
+            .navigationDestination(for: String.self) { route in
+                if route == "prediction", let image = capturedImage {
+                    PredictionView(path: $path, capturedImage: image)
+                        .navigationBarBackButtonHidden(true)
+                        .onDisappear { capturedImage = nil }
+                } else if route == "camera" {
+                    CameraView()  // Ensures navigation works properly
+                }
             }
+
         }
     }
 }
+
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
